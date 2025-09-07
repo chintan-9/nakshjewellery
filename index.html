@@ -25,7 +25,7 @@
     header h1{margin:0;font-size:2.2rem;letter-spacing:1px}
     header p{margin:6px 0 14px}
     header img{
-      width:min(1100px,92%);
+      width:min(1100px,75%);
       height:auto;
       border-radius:12px;
       display:block;
@@ -56,6 +56,7 @@
     td img{
       width:200px;
       max-width:100%;
+	  max-height:100%;
       border-radius:10px;
       display:block;
       cursor:pointer; /* make images clickable */
@@ -97,7 +98,7 @@
     }
 
     /* ---------- Mobile (stacked cards) ---------- */
-    @media (max-width: 768px){
+  /*  @media (max-width: 768px){
       thead{display:none}
       table, tbody, tr, td{display:block;width:100%}
       tr{
@@ -107,61 +108,71 @@
         box-shadow:0 2px 8px rgba(0,0,0,.08);
         padding:12px 14px;
         border:1px solid #eee;
-      }
-      td{
-        border:none;
-        padding:8px 0;
-        display:flex;
-        gap:10px;
-      }
-      td[data-label]:before{
-        content: attr(data-label) ": ";
-        flex:0 0 110px;
-        color:#6a3a20;
-        font-weight:700;
-      }
-      td:first-child{
-        display:block;
-      }
-      td:first-child:before{content:""}
-      td img{margin:0 auto 6px}
+      } */
+	  
+	  
+	 
+   /* ---------- Modal ---------- */
+    .modal {
+      display:none;                 /* hidden by default */
+	 
+      position:fixed;
+      inset:0;            /* top:0; right:0; bottom:0; left:0; */
+      background:rgba(0,0,0,0.75);
+      z-index:1200;
+      align-items:center;           /* vertical center */
+      justify-content:center;       /* horizontal center */
+      padding:24px;                 /* small padding on small screens */
     }
 
-    /* ---------- Image Popup Modal ---------- */
-   .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 9999; 
-    left: 0; 
-    top: 0; 
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0,0,0,0.85); 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-  }
+    /* Modal inner container defines the maximum size for the image */
+    .modal-body{
+	 
+      position:relative;
+      width:20vw;
+	  height:65vh;
+	  max-width:20vw;
+	  max-height:65vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:10px;
+      overflow:hidden;              /* ensures content does not overflow container */
+      background:linear-gradient(180deg,#fff,#fafafa);
+      box-shadow:0 20px 40px rgba(0,0,0,0.45);
+    }
 
-  /* Centered Image */
-  .modal-content {
-    max-width: 90%;
-    max-height: 80vh;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-  }
+    /* The image scales down to fit inside modal-body while preserving aspect ratio */
+    .modal-body img{
+	  max-width: 100%;   /* always fit width */
+	  max-height: 100%;  /* always fit height */
+      width:auto;
+      height: auto;
+      object-fit:contain;
+	  display:block;
 
-  /* Close Button */
-  .modal-close {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 10000;
-  }
-  .modal-close:hover { color: #ccc; }
+    }
+
+    /* Close button sits inside modal-body (top-right) */
+    .modal-close {
+	  
+      position:absolute;
+      top:8px;
+      right:8px;
+      background:rgba(0,0,0,0.6);
+      color:#fff;
+      border:0;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      font-size:20px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      line-height:1;
+    }
+    /*.modal-close:focus{outline:2px solid #fff}*/
   </style>
 </head>
   <body>
@@ -182,8 +193,9 @@
       </tr>
     </thead>
     <tbody>
+      
       <tr>
-        <td data-label="Image"><img src="images/WhatsApp Image 2025-08-21 at 7.50.11 AM.jpeg" alt="Handmade Necklace Set (Red & Green)"/></td>
+        <td data-label="Image"><img src="images/WhatsApp Image 2025-08-21 at 7.50.11 AM.jpeg" alt="Handmade Necklace Set (Red & Green)" / ></td>
         <td data-label="Description">
           <strong>Handmade Necklace Set (Red & Green)</strong>
           A vibrant terracotta necklace set with a bold red and green pendant, paired with matching earrings. Perfect for ethnic wear, festivals, and cultural occasions. Lightweight, eco-friendly, and handcrafted with love.
@@ -225,7 +237,6 @@
         <td data-label="Price (₹)" class="price">₹300</td>
         <td data-label="Contact" class="email"><a href="mailto:shrutidraval@gmail.com">shrutidraval@gmail.com</a></td>
       </tr>
-
       <tr>
         <td data-label="Image"><img src="images/WhatsApp Image 2025-08-21 at 7.51.19 AM.jpeg" alt="Beaded Terracotta Necklace Set (Red & Black)"/></td>
         <td data-label="Description">
@@ -236,7 +247,6 @@
         <td data-label="Price (₹)" class="price">₹300</td>
         <td data-label="Contact" class="email"><a href="mailto:shrutidraval@gmail.com">shrutidraval@gmail.com</a></td>
       </tr>
-
       <tr>
         <td data-label="Image"><img src="images/WhatsApp Image 2025-08-21 at 7.51.20 AM.jpeg" alt="Hexagon Pendant Necklace (Yellow & Green)"/></td>
         <td data-label="Description">
@@ -400,32 +410,78 @@
     Handmade with Love • Eco-Friendly • Unique
   </footer>
 
+ <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-body" role="document">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      <img id="modalImage" src="" alt="Enlarged preview">
+    </div>
+  </div>
 
-<script>
-  const modal = document.getElementById("imgModal");
-  const modalImg = document.getElementById("modalImg");
-  const closeBtn = document.querySelector(".modal-close");
+  <script>
+    (function(){
+      const modal = document.getElementById('modal');
+      const modalImage = document.getElementById('modalImage');
+      const modalClose = document.getElementById('modalClose');
 
-  // Click image → show popup
-  document.querySelectorAll("td img").forEach(img => {
-    img.addEventListener("click", () => {
-      modal.style.display = "flex";
-      modalImg.src = img.src;
-      modalImg.alt = img.alt;
-    });
-  });
+      // Open modal when any table image is clicked
+      document.querySelectorAll('table td img').forEach(img=>{
+        img.addEventListener('click', (e)=>{
+          const hires = img.dataset.hires || img.src;
+          openModal(hires, img.alt || '');
+        });
+        // keyboard accessible
+        img.tabIndex = 0;
+        img.addEventListener('keydown', (evt)=>{
+          if(evt.key === 'Enter' || evt.key === ' ') {
+            evt.preventDefault();
+            const hires = img.dataset.hires || img.src;
+            openModal(hires, img.alt || '');
+          }
+        });
+      });
 
-  // Close popup on X click
-  closeBtn.onclick = () => { modal.style.display = "none"; };
+      function openModal(src, alt){
+        modalImage.src = src;
+        modalImage.alt = alt;
+        // show modal
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden','false');
+        // prevent background scroll
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        // focus close button for keyboard users
+        modalClose.focus();
+      }
 
-  // Close when clicking outside image
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.style.display = "none";
-  });
-</script>
+      function closeModal(){
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden','true');
+        modalImage.src = ''; // free memory
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+
+      // close button
+      modalClose.addEventListener('click', closeModal);
+
+      // click outside to close (click on backdrop)
+      modal.addEventListener('click', (e)=>{
+        if(e.target === modal) closeModal();
+      });
+
+      // ESC key closes
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+      });
+
+      // on orientation/resize the modal stays centered due to flexbox and constraints in CSS
+    })();
+  </script>
   
   </body>
 </html>
+
 
 
 
